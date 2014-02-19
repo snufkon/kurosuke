@@ -10,7 +10,7 @@
 (def screen-width (atom 500))
 (def screen-height (atom 500))
 
-(def canvas (.getElementById js/document "world"))
+(def canvas (dom/by-id "world"))
 (def ctx (.getContext canvas "2d"))
 (def boids (array))
 

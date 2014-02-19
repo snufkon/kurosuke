@@ -1,5 +1,7 @@
 (ns kurosuke.main
-  (:require [goog.uri.utils :as utils]))
+  (:require [goog.uri.utils :as utils]
+            [domina :as dom]
+            [domina.events :as ev]))
 
 (def FPS 30)
 (def BOID_SIZE 5)
@@ -8,20 +10,24 @@
 (def screen-width (atom 500))
 (def screen-height (atom 500))
 
-(def NUM_BOIDS
-  (or (utils/getParamValue (.-href (.-location js/window)) "n") 100))
 (def canvas (.getElementById js/document "world"))
 (def ctx (.getContext canvas "2d"))
 (def boids (array))
 
 (defn make-boids []
-  (loop [i 0]
-    (when (< i NUM_BOIDS)
-      (aset boids i (js-obj "x" (* (js/Math.random) @screen-width)
-                            "y" (* (js/Math.random) @screen-height)
-                            "vx" 0
-                            "vy" 0))
-      (recur (inc i)))))
+  (let [num-boids (or (utils/getParamValue (.-href (.-location js/window)) "n") 100)]
+    (loop [i 0]
+      (when (< i num-boids)
+        (aset boids i (js-obj "x" (* (js/Math.random) @screen-width)
+                              "y" (* (js/Math.random) @screen-height)
+                              "vx" 0
+                              "vy" 0))
+        (recur (inc i))))))
+
+(defn add-boid [x y]
+  (aset boids
+        (.-length boids)
+        (js-obj "x" x "y" y "vx" 0 "vy" 0)))
 
 (defn get-distance [b1 b2]
   (let [x (- (aget b1 "x") (aget b2 "x"))
@@ -135,6 +141,11 @@
   (set! (.-width canvas) @screen-width)
   (set! (.-height canvas) @screen-height))
 
+(defn add-handler [evt]
+  (let [x (:clientX evt)
+        y (:clientY evt)]
+    (add-boid x y)))
+
 (defn init []
   (if (== js/window (.-parent js/window))
     (do ;; when page is displayed directly
@@ -146,6 +157,7 @@
 
   (set! (.-fillStyle ctx) "rgba(33, 33, 33, 0.8)")
   (make-boids)
-  (js/setInterval simulate (/ 1000 FPS)))
+  (js/setInterval simulate (/ 1000 FPS))
+  (ev/listen! (dom/by-id "world") :click add-handler))
 
 (set! (.-onload js/window) init)

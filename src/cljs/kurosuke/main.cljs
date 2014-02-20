@@ -121,6 +121,7 @@
 
 (defn draw []
   (.clearRect ctx 0 0 @screen-width @screen-height)
+  (.fillText ctx (str "Num: " (.-length boids)) 10 20)
   (let [rate (/ boid-size (.-width img))
         height (* (.-height img) rate)]
     (loop [i 0]
@@ -185,6 +186,7 @@
 
   (set! (.-onload img) (fn []
                          (set! (.-fillStyle ctx) "rgba(33, 33, 33, 0.8)")
+                         (set! (.-font ctx) "bold 18px 'Arial'")
                          (make-boids)
                          (js/setInterval simulate (/ 1000 FPS))
                          (register-listener))))

@@ -1,5 +1,6 @@
 (ns kurosuke.main
   (:require [goog.uri.utils :as utils]
+            [goog.userAgent :as ua]
             [domina :as dom]
             [domina.events :as ev]))
 
@@ -149,7 +150,7 @@
     (add-boid x y)))
 
 (defn register-listener []
-  (if (> (.indexOf (.-userAgent js/navigator) "iPhone") 0)
+  (if ua/MOBILE
     (ev/listen! (dom/by-id "world") :touchstart add-handler)
     (ev/listen! (dom/by-id "world") :click add-handler)))
 
@@ -167,7 +168,6 @@
                          (set! (.-fillStyle ctx) "rgba(33, 33, 33, 0.8)")
                          (make-boids)
                          (js/setInterval simulate (/ 1000 FPS))
-                         (register-listener)
-                         )))
+                         (register-listener))))
 
 (set! (.-onload js/window) init)

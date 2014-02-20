@@ -1860,7 +1860,7 @@ function Cc(a, b) {
 }
 var Ec = function Dc(b) {
   return null == b ? null : null == M(b) ? I(J(b)) : v ? P(J(b), Dc(M(b))) : null
-}, Gc = function() {
+}, Fc = function() {
   function a(a, b, c, d) {
     return P(a, P(b, P(c, d)))
   }
@@ -2003,26 +2003,26 @@ function Hc(a, b, c) {
   if(19 === b) {
     return a.Ya ? a.Ya(c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa) : a.Ya ? a.Ya(c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa) : a.call(null, c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa)
   }
-  var Fc = B(Lb);
+  var Gc = B(Lb);
   C(Lb);
   if(20 === b) {
-    return a.Za ? a.Za(c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa, Fc) : a.Za ? a.Za(c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa, Fc) : a.call(null, c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa, Fc)
+    return a.Za ? a.Za(c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa, Gc) : a.Za ? a.Za(c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa, Gc) : a.call(null, c, d, e, f, h, a, k, l, m, n, q, u, A, G, N, S, ba, ma, Aa, Gc)
   }
   throw Error("Only up to 20 arguments supported on functions");
 }
 var Ic = function() {
   function a(a, b, c, d, e) {
-    b = Gc.l(b, c, d, e);
+    b = Fc.l(b, c, d, e);
     c = a.p;
     return a.k ? (d = Cc(b, c + 1), d <= c ? Hc(a, d, b) : a.k(b)) : a.apply(a, Bc(b))
   }
   function b(a, b, c, d) {
-    b = Gc.c(b, c, d);
+    b = Fc.c(b, c, d);
     c = a.p;
     return a.k ? (d = Cc(b, c + 1), d <= c ? Hc(a, d, b) : a.k(b)) : a.apply(a, Bc(b))
   }
   function c(a, b, c) {
-    b = Gc.a(b, c);
+    b = Fc.a(b, c);
     c = a.p;
     if(a.k) {
       var d = Cc(b, c + 1);
@@ -4609,7 +4609,7 @@ var Ne = function() {
 }();
 var Oe = /#|$/;
 function Pe(a) {
-  var b = window.location.href, c = b.search(Oe), d;
+  var b = Qe, c = b.search(Oe), d;
   a: {
     d = 0;
     for(var e = a.length;0 <= (d = b.indexOf(a, d)) && d < c;) {
@@ -4633,13 +4633,14 @@ function Pe(a) {
   d += a.length + 1;
   return decodeURIComponent(b.substr(d, e - d).replace(/\+/g, " "))
 }
-;var Qe = Rd.d(500), Re = Rd.d(500), Se = Fe(), Te = Se.getContext("2d"), $ = [], Ue = new Image;
-function Ve() {
+;var Re = Rd.d(500), Se = Rd.d(500), Te = Fe(), Ue = Te.getContext("2d"), $ = [], Ve = new Image, Qe = window.location.href, We, Xe = Pe("s");
+We = s(Xe) ? Xe : 30;
+function Ye() {
   a: {
-    Te.clearRect(0, 0, jb(Qe), jb(Re));
-    for(var a = Ue.height * (30 / Ue.width), b = 0;;) {
+    Ue.clearRect(0, 0, jb(Re), jb(Se));
+    for(var a = Ve.height * (We / Ve.width), b = 0;;) {
       if(b < $.length) {
-        Te.drawImage(Ue, $[b].x - 15, $[b].y - 15, 30, a), b += 1
+        Ue.drawImage(Ve, $[b].x - We / 2, $[b].y - We / 2, We, a), b += 1
       }else {
         break a
       }
@@ -4686,8 +4687,8 @@ function Ve() {
         b = $[a];
         c = Math.sqrt.d ? Math.sqrt.d(b.vx * b.vx + b.vy * b.vy) : Math.sqrt.call(null, b.vx * b.vx + b.vy * b.vy);
         7 <= c && (c = 7 / c, b.vx *= c, b.vy *= c);
-        (0 > b.x && 0 > b.vx || b.x > jb(Qe) && 0 < b.vx) && (b.vx *= -1);
-        (0 > b.y && 0 > b.vy || b.y > jb(Re) && 0 < b.vy) && (b.vy *= -1);
+        (0 > b.x && 0 > b.vx || b.x > jb(Re) && 0 < b.vx) && (b.vx *= -1);
+        (0 > b.y && 0 > b.vy || b.y > jb(Se) && 0 < b.vy) && (b.vy *= -1);
         b = $[a];
         b.x += b.vx;
         b.y += b.vy;
@@ -4701,34 +4702,34 @@ function Ve() {
   }
   return a
 }
-function We() {
-  Sd(Qe, document.documentElement.clientWidth);
-  Sd(Re, document.documentElement.clientHeight);
-  Se.width = jb(Qe);
-  return Se.height = jb(Re)
+function Ze() {
+  Sd(Re, document.documentElement.clientWidth);
+  Sd(Se, document.documentElement.clientHeight);
+  Te.width = jb(Re);
+  return Te.height = jb(Se)
 }
-function Xe(a) {
+function $e(a) {
   var b = Ud.d(a);
   a = Wd.d(a);
   return $[$.length] = {x:b, y:a, vx:0, vy:0}
 }
 window.onload = function() {
-  window === window.parent ? (We(), window.onresize = We) : (Se.width = jb(Qe), Se.height = jb(Re));
-  s(Pe("i")) ? Ue.src = "resources/public/img/totoro.png" : Ue.src = "resources/public/img/kurosuke.png";
-  return Ue.onload = function() {
-    Te.fillStyle = "rgba(33, 33, 33, 0.8)";
+  window === window.parent ? (Ze(), window.onresize = Ze) : (Te.width = jb(Re), Te.height = jb(Se));
+  s(Pe("i")) ? Ve.src = "resources/public/img/totoro.png" : Ve.src = "resources/public/img/kurosuke.png";
+  return Ve.onload = function() {
+    Ue.fillStyle = "rgba(33, 33, 33, 0.8)";
     var a;
     a = Pe("n");
     a = s(a) ? a : 10;
     for(var b = 0;;) {
       if(b < a) {
-        $[b] = {x:Math.random() * jb(Qe), y:Math.random() * jb(Re), vx:0, vy:0}, b += 1
+        $[b] = {x:Math.random() * jb(Re), y:Math.random() * jb(Se), vx:0, vy:0}, b += 1
       }else {
         break
       }
     }
-    setInterval(Ve, 1E3 / 30);
-    return s(ua) ? Ne.c(Fe(), Vd, Xe) : Ne.c(Fe(), Td, Xe)
+    setInterval(Ye, 1E3 / 30);
+    return s(ua) ? Ne.c(Fe(), Vd, $e) : Ne.c(Fe(), Td, $e)
   }
 };
 

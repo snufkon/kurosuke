@@ -5,7 +5,6 @@
             [domina.events :as ev]))
 
 (def FPS 30)
-(def BOID_SIZE 30)
 (def MAX_SPEED 7)
 (def BOID_DISTANCE 8)
 (def DEFAULT_BOIDS_NUM 10)
@@ -16,9 +15,11 @@
 (def ctx (.getContext canvas "2d"))
 (def boids (array))
 (def img (js/Image.))
+(def url (.-href (.-location js/window)))
+(def boid-size (or (utils/getParamValue url "s") 30))
 
 (defn make-boids []
-  (let [num-boids (or (utils/getParamValue (.-href (.-location js/window)) "n") DEFAULT_BOIDS_NUM)]
+  (let [num-boids (or (utils/getParamValue url "n") DEFAULT_BOIDS_NUM)]
     (loop [i 0]
       (when (< i num-boids)
         (aset boids i (js-obj "x" (* (js/Math.random) @screen-width)
@@ -111,23 +112,23 @@
   (loop [i 0]
     (when (< i (.-length boids))
       (.drawImage ctx img
-                  (- (x-boid i) (/ BOID_SIZE 2))
-                  (- (y-boid i) (/ BOID_SIZE 2))
-                  BOID_SIZE
-                  BOID_SIZE)
+                  (- (x-boid i) (/ boid-size 2))
+                  (- (y-boid i) (/ boid-size 2))
+                  boid-size
+                  boid-size)
       (recur (inc i)))))
   )
 
 (defn draw []
   (.clearRect ctx 0 0 @screen-width @screen-height)
-  (let [rate (/ BOID_SIZE (.-width img))
+  (let [rate (/ boid-size (.-width img))
         height (* (.-height img) rate)]
     (loop [i 0]
       (when (< i (.-length boids))
         (.drawImage ctx img
-                    (- (x-boid i) (/ BOID_SIZE 2))
-                    (- (y-boid i) (/ BOID_SIZE 2))
-                    BOID_SIZE
+                    (- (x-boid i) (/ boid-size 2))
+                    (- (y-boid i) (/ boid-size 2))
+                    boid-size
                     height)
         (recur (inc i))))))
 
@@ -178,7 +179,7 @@
       (set! (.-width canvas) @screen-width)
       (set! (.-height canvas) @screen-height)))
 
-  (if (utils/getParamValue (.-href (.-location js/window)) "i")
+  (if (utils/getParamValue url "i")
     (set! (.-src img) "resources/public/img/totoro.png")
     (set! (.-src img) "resources/public/img/kurosuke.png"))
 

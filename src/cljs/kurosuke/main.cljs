@@ -8,6 +8,7 @@
 (def BOID_SIZE 30)
 (def MAX_SPEED 7)
 (def BOID_DISTANCE 8)
+(def DEFAULT_BOIDS_NUM 10)
 
 (def screen-width (atom 500))
 (def screen-height (atom 500))
@@ -17,7 +18,7 @@
 (def img (js/Image.))
 
 (defn make-boids []
-  (let [num-boids (or (utils/getParamValue (.-href (.-location js/window)) "n") 100)]
+  (let [num-boids (or (utils/getParamValue (.-href (.-location js/window)) "n") DEFAULT_BOIDS_NUM)]
     (loop [i 0]
       (when (< i num-boids)
         (aset boids i (js-obj "x" (* (js/Math.random) @screen-width)
@@ -104,7 +105,7 @@
             (and (> (aget b "y") @screen-height) (> (aget b "vy") 0)))
       (*= b "vy" -1))))
 
-
+(comment
 (defn draw []
   (.clearRect ctx 0 0 @screen-width @screen-height)
   (loop [i 0]
@@ -115,6 +116,20 @@
                   BOID_SIZE
                   BOID_SIZE)
       (recur (inc i)))))
+  )
+
+(defn draw []
+  (.clearRect ctx 0 0 @screen-width @screen-height)
+  (let [rate (/ BOID_SIZE (.-width img))
+        height (* (.-height img) rate)]
+    (loop [i 0]
+      (when (< i (.-length boids))
+        (.drawImage ctx img
+                    (- (x-boid i) (/ BOID_SIZE 2))
+                    (- (y-boid i) (/ BOID_SIZE 2))
+                    BOID_SIZE
+                    height)
+        (recur (inc i))))))
 
 (defn move []
   (loop [i 0]
@@ -163,7 +178,10 @@
       (set! (.-width canvas) @screen-width)
       (set! (.-height canvas) @screen-height)))
 
-  (set! (.-src img) "resources/public/img/kurosuke.png")
+  (if (utils/getParamValue (.-href (.-location js/window)) "i")
+    (set! (.-src img) "resources/public/img/totoro.png")
+    (set! (.-src img) "resources/public/img/kurosuke.png"))
+
   (set! (.-onload img) (fn []
                          (set! (.-fillStyle ctx) "rgba(33, 33, 33, 0.8)")
                          (make-boids)

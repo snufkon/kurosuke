@@ -4634,7 +4634,7 @@ function Pe(a) {
   return decodeURIComponent(b.substr(d, e - d).replace(/\+/g, " "))
 }
 ;var Re = Rd.d(500), Se = Rd.d(500), Te = Fe(), Ue = Te.getContext("2d"), $ = [], Ve = new Image, Qe = window.location.href, We, Xe = Pe("s");
-We = s(Xe) ? Xe : 30;
+We = s(Xe) ? Xe : 50;
 function Ye() {
   a: {
     Ue.clearRect(0, 0, jb(Re), jb(Se));
@@ -4665,7 +4665,7 @@ function Ye() {
         b: {
           for(b = a, c = $.length, d = 0;;) {
             if(d < c) {
-              d !== b && (f = $[b], e = $[d], h = e.x - f.x, e = e.y - f.y, 8 > (Math.sqrt.d ? Math.sqrt.d(h * h + e * e) : Math.sqrt.call(null, h * h + e * e)) && (f.vx -= $[d].x - f.x, f.vy -= $[d].y - f.y)), d += 1
+              d !== b && (f = $[b], e = $[d], h = e.x - f.x, e = e.y - f.y, 10 > (Math.sqrt.d ? Math.sqrt.d(h * h + e * e) : Math.sqrt.call(null, h * h + e * e)) && (f.vx -= $[d].x - f.x, f.vy -= $[d].y - f.y)), d += 1
             }else {
               break b
             }

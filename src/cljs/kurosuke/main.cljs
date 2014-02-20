@@ -6,7 +6,7 @@
 
 (def FPS 30)
 (def MAX_SPEED 7)
-(def BOID_DISTANCE 8)
+(def BOID_DISTANCE 10)
 (def DEFAULT_BOIDS_NUM 10)
 
 (def screen-width (atom 500))
@@ -16,7 +16,7 @@
 (def boids (array))
 (def img (js/Image.))
 (def url (.-href (.-location js/window)))
-(def boid-size (or (utils/getParamValue url "s") 30))
+(def boid-size (or (utils/getParamValue url "s") 50))
 
 (defn make-boids []
   (let [num-boids (or (utils/getParamValue url "n") DEFAULT_BOIDS_NUM)]

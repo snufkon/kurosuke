@@ -29841,13 +29841,15 @@ goog.require("domina");
 goog.require("goog.uri.utils");
 goog.require("goog.uri.utils");
 kurosuke.main.FPS = 30;
-kurosuke.main.BOID_SIZE = 5;
+kurosuke.main.BOID_SIZE = 30;
 kurosuke.main.MAX_SPEED = 7;
+kurosuke.main.BOID_DISTANCE = 8;
 kurosuke.main.screen_width = cljs.core.atom.call(null, 500);
 kurosuke.main.screen_height = cljs.core.atom.call(null, 500);
 kurosuke.main.canvas = domina.by_id.call(null, "world");
 kurosuke.main.ctx = kurosuke.main.canvas.getContext("2d");
 kurosuke.main.boids = [];
+kurosuke.main.img = new Image;
 kurosuke.main.make_boids = function make_boids() {
   var num_boids = function() {
     var or__3283__auto__ = goog.uri.utils.getParamValue(window.location.href, "n");
@@ -29861,11 +29863,11 @@ kurosuke.main.make_boids = function make_boids() {
   while(true) {
     if(i < num_boids) {
       kurosuke.main.boids[i] = function() {
-        var obj6246 = {"x":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_width), "y":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_height), "vx":0, "vy":0};
-        return obj6246
+        var obj7684 = {"x":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_width), "y":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_height), "vx":0, "vy":0};
+        return obj7684
       }();
-      var G__6247 = i + 1;
-      i = G__6247;
+      var G__7685 = i + 1;
+      i = G__7685;
       continue
     }else {
       return null
@@ -29875,8 +29877,8 @@ kurosuke.main.make_boids = function make_boids() {
 };
 kurosuke.main.add_boid = function add_boid(x, y) {
   return kurosuke.main.boids[kurosuke.main.boids.length] = function() {
-    var obj6251 = {"x":x, "y":y, "vx":0, "vy":0};
-    return obj6251
+    var obj7689 = {"x":x, "y":y, "vx":0, "vy":0};
+    return obj7689
   }()
 };
 kurosuke.main.get_distance = function get_distance(b1, b2) {
@@ -29912,12 +29914,12 @@ kurosuke.main.rule1 = function rule1(index) {
   var i = 0;
   while(true) {
     if(i < num_boids) {
-      var G__6252 = x + kurosuke.main.x_boid.call(null, i);
-      var G__6253 = y + kurosuke.main.y_boid.call(null, i);
-      var G__6254 = i + 1;
-      x = G__6252;
-      y = G__6253;
-      i = G__6254;
+      var G__7690 = x + kurosuke.main.x_boid.call(null, i);
+      var G__7691 = y + kurosuke.main.y_boid.call(null, i);
+      var G__7692 = i + 1;
+      x = G__7690;
+      y = G__7691;
+      i = G__7692;
       continue
     }else {
       var cx = (x - kurosuke.main.x_boid.call(null, index)) / (num_boids - 1);
@@ -29935,19 +29937,19 @@ kurosuke.main.rule2 = function rule2(index) {
   while(true) {
     if(i < num_boids) {
       if(i === index) {
-        var G__6255 = i + 1;
-        i = G__6255;
+        var G__7693 = i + 1;
+        i = G__7693;
         continue
       }else {
         var b = kurosuke.main.boids[index];
         var d = kurosuke.main.get_distance.call(null, kurosuke.main.boids[i], b);
-        if(d < 5) {
+        if(d < kurosuke.main.BOID_DISTANCE) {
           kurosuke.main.__EQ_.call(null, b, "vx", kurosuke.main.x_boid.call(null, i) - b["x"]);
           kurosuke.main.__EQ_.call(null, b, "vy", kurosuke.main.y_boid.call(null, i) - b["y"])
         }else {
         }
-        var G__6256 = i + 1;
-        i = G__6256;
+        var G__7694 = i + 1;
+        i = G__7694;
         continue
       }
     }else {
@@ -29963,12 +29965,12 @@ kurosuke.main.rule3 = function rule3(index) {
   var i = 0;
   while(true) {
     if(i < num_boids) {
-      var G__6257 = vx + kurosuke.main.vx_boid.call(null, i);
-      var G__6258 = vy + kurosuke.main.vy_boid.call(null, i);
-      var G__6259 = i + 1;
-      vx = G__6257;
-      vy = G__6258;
-      i = G__6259;
+      var G__7695 = vx + kurosuke.main.vx_boid.call(null, i);
+      var G__7696 = vy + kurosuke.main.vy_boid.call(null, i);
+      var G__7697 = i + 1;
+      vx = G__7695;
+      vy = G__7696;
+      i = G__7697;
       continue
     }else {
       var cvx = (vx - kurosuke.main.vx_boid.call(null, index)) / (num_boids - 1);
@@ -29984,9 +29986,9 @@ kurosuke.main.restrict = function restrict(index) {
   var b = kurosuke.main.boids[index];
   var speed = Math.sqrt.call(null, b["vx"] * b["vx"] + b["vy"] * b["vy"]);
   if(speed >= kurosuke.main.MAX_SPEED) {
-    var r_6260 = kurosuke.main.MAX_SPEED / speed;
-    kurosuke.main._STAR__EQ_.call(null, b, "vx", r_6260);
-    kurosuke.main._STAR__EQ_.call(null, b, "vy", r_6260)
+    var r_7698 = kurosuke.main.MAX_SPEED / speed;
+    kurosuke.main._STAR__EQ_.call(null, b, "vx", r_7698);
+    kurosuke.main._STAR__EQ_.call(null, b, "vy", r_7698)
   }else {
   }
   if(b["x"] < 0 && b["vx"] < 0 || b["x"] > cljs.core.deref.call(null, kurosuke.main.screen_width) && b["vx"] > 0) {
@@ -30004,9 +30006,9 @@ kurosuke.main.draw = function draw() {
   var i = 0;
   while(true) {
     if(i < kurosuke.main.boids.length) {
-      kurosuke.main.ctx.fillRect(kurosuke.main.x_boid.call(null, i) - kurosuke.main.BOID_SIZE / 2, kurosuke.main.y_boid.call(null, i) - kurosuke.main.BOID_SIZE / 2, kurosuke.main.BOID_SIZE, kurosuke.main.BOID_SIZE);
-      var G__6261 = i + 1;
-      i = G__6261;
+      kurosuke.main.ctx.drawImage(kurosuke.main.img, kurosuke.main.x_boid.call(null, i) - kurosuke.main.BOID_SIZE / 2, kurosuke.main.y_boid.call(null, i) - kurosuke.main.BOID_SIZE / 2, kurosuke.main.BOID_SIZE, kurosuke.main.BOID_SIZE);
+      var G__7699 = i + 1;
+      i = G__7699;
       continue
     }else {
       return null
@@ -30022,11 +30024,11 @@ kurosuke.main.move = function move() {
       kurosuke.main.rule2.call(null, i);
       kurosuke.main.rule3.call(null, i);
       kurosuke.main.restrict.call(null, i);
-      var b_6262 = kurosuke.main.boids[i];
-      kurosuke.main._PLUS__EQ_.call(null, b_6262, "x", b_6262["vx"]);
-      kurosuke.main._PLUS__EQ_.call(null, b_6262, "y", b_6262["vy"]);
-      var G__6263 = i + 1;
-      i = G__6263;
+      var b_7700 = kurosuke.main.boids[i];
+      kurosuke.main._PLUS__EQ_.call(null, b_7700, "x", b_7700["vx"]);
+      kurosuke.main._PLUS__EQ_.call(null, b_7700, "y", b_7700["vy"]);
+      var G__7701 = i + 1;
+      i = G__7701;
       continue
     }else {
       return null
@@ -30063,9 +30065,12 @@ kurosuke.main.init = function init() {
     kurosuke.main.canvas.width = cljs.core.deref.call(null, kurosuke.main.screen_width);
     kurosuke.main.canvas.height = cljs.core.deref.call(null, kurosuke.main.screen_height)
   }
-  kurosuke.main.ctx.fillStyle = "rgba(33, 33, 33, 0.8)";
-  kurosuke.main.make_boids.call(null);
-  setInterval(kurosuke.main.simulate, 1E3 / kurosuke.main.FPS);
-  return domina.events.listen_BANG_.call(null, domina.by_id.call(null, "world"), new cljs.core.Keyword(null, "click", "click", 1108654330), kurosuke.main.add_handler)
+  kurosuke.main.img.src = "resources/public/img/kurosuke.png";
+  return kurosuke.main.img.onload = function() {
+    kurosuke.main.ctx.fillStyle = "rgba(33, 33, 33, 0.8)";
+    kurosuke.main.make_boids.call(null);
+    setInterval(kurosuke.main.simulate, 1E3 / kurosuke.main.FPS);
+    return domina.events.listen_BANG_.call(null, domina.by_id.call(null, "world"), new cljs.core.Keyword(null, "click", "click", 1108654330), kurosuke.main.add_handler)
+  }
 };
 window.onload = kurosuke.main.init;

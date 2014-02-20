@@ -4,15 +4,16 @@
             [domina.events :as ev]))
 
 (def FPS 30)
-(def BOID_SIZE 5)
+(def BOID_SIZE 30)
 (def MAX_SPEED 7)
+(def BOID_DISTANCE 8)
 
 (def screen-width (atom 500))
 (def screen-height (atom 500))
-
 (def canvas (dom/by-id "world"))
 (def ctx (.getContext canvas "2d"))
 (def boids (array))
+(def img (js/Image.))
 
 (defn make-boids []
   (let [num-boids (or (utils/getParamValue (.-href (.-location js/window)) "n") 100)]
@@ -69,7 +70,7 @@
         (if (== i index) (recur (inc i))
           (let [b (aget boids index)
                 d (get-distance (aget boids i) b)]
-            (when (< d 5)
+            (when (< d BOID_DISTANCE)
               (-= b "vx" (- (x-boid i) (aget b "x")))
               (-= b "vy" (- (y-boid i) (aget b "y"))))
             (recur (inc i))))))))
@@ -102,15 +103,16 @@
             (and (> (aget b "y") @screen-height) (> (aget b "vy") 0)))
       (*= b "vy" -1))))
 
+
 (defn draw []
   (.clearRect ctx 0 0 @screen-width @screen-height)
   (loop [i 0]
     (when (< i (.-length boids))
-      (.fillRect ctx
-                 (- (x-boid i) (/ BOID_SIZE 2))
-                 (- (y-boid i) (/ BOID_SIZE 2))
-                 BOID_SIZE
-                 BOID_SIZE)
+      (.drawImage ctx img
+                  (- (x-boid i) (/ BOID_SIZE 2))
+                  (- (y-boid i) (/ BOID_SIZE 2))
+                  BOID_SIZE
+                  BOID_SIZE)
       (recur (inc i)))))
 
 (defn move []
@@ -155,9 +157,11 @@
       (set! (.-width canvas) @screen-width)
       (set! (.-height canvas) @screen-height)))
 
-  (set! (.-fillStyle ctx) "rgba(33, 33, 33, 0.8)")
-  (make-boids)
-  (js/setInterval simulate (/ 1000 FPS))
-  (ev/listen! (dom/by-id "world") :click add-handler))
+  (set! (.-src img) "resources/public/img/kurosuke.png")
+  (set! (.-onload img) (fn []
+                         (set! (.-fillStyle ctx) "rgba(33, 33, 33, 0.8)")
+                         (make-boids)
+                         (js/setInterval simulate (/ 1000 FPS))
+                         (ev/listen! (dom/by-id "world") :click add-handler))))
 
 (set! (.-onload js/window) init)

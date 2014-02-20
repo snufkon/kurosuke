@@ -106,19 +106,6 @@
             (and (> (aget b "y") @screen-height) (> (aget b "vy") 0)))
       (*= b "vy" -1))))
 
-(comment
-(defn draw []
-  (.clearRect ctx 0 0 @screen-width @screen-height)
-  (loop [i 0]
-    (when (< i (.-length boids))
-      (.drawImage ctx img
-                  (- (x-boid i) (/ boid-size 2))
-                  (- (y-boid i) (/ boid-size 2))
-                  boid-size
-                  boid-size)
-      (recur (inc i)))))
-  )
-
 (defn draw []
   (.clearRect ctx 0 0 @screen-width @screen-height)
   (.fillText ctx (str "Num: " (.-length boids)) 10 20)

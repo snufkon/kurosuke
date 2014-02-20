@@ -148,6 +148,11 @@
         y (:clientY evt)]
     (add-boid x y)))
 
+(defn register-listener []
+  (if (> (.indexOf (.-userAgent js/navigator) "iPhone") 0)
+    (ev/listen! (dom/by-id "world") :touchstart add-handler)
+    (ev/listen! (dom/by-id "world") :click add-handler)))
+
 (defn init []
   (if (== js/window (.-parent js/window))
     (do ;; when page is displayed directly
@@ -162,6 +167,7 @@
                          (set! (.-fillStyle ctx) "rgba(33, 33, 33, 0.8)")
                          (make-boids)
                          (js/setInterval simulate (/ 1000 FPS))
-                         (ev/listen! (dom/by-id "world") :click add-handler))))
+                         (register-listener)
+                         )))
 
 (set! (.-onload js/window) init)

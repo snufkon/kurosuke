@@ -29863,11 +29863,11 @@ kurosuke.main.make_boids = function make_boids() {
   while(true) {
     if(i < num_boids) {
       kurosuke.main.boids[i] = function() {
-        var obj7684 = {"x":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_width), "y":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_height), "vx":0, "vy":0};
-        return obj7684
+        var obj7915 = {"x":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_width), "y":Math.random() * cljs.core.deref.call(null, kurosuke.main.screen_height), "vx":0, "vy":0};
+        return obj7915
       }();
-      var G__7685 = i + 1;
-      i = G__7685;
+      var G__7916 = i + 1;
+      i = G__7916;
       continue
     }else {
       return null
@@ -29877,8 +29877,8 @@ kurosuke.main.make_boids = function make_boids() {
 };
 kurosuke.main.add_boid = function add_boid(x, y) {
   return kurosuke.main.boids[kurosuke.main.boids.length] = function() {
-    var obj7689 = {"x":x, "y":y, "vx":0, "vy":0};
-    return obj7689
+    var obj7920 = {"x":x, "y":y, "vx":0, "vy":0};
+    return obj7920
   }()
 };
 kurosuke.main.get_distance = function get_distance(b1, b2) {
@@ -29914,12 +29914,12 @@ kurosuke.main.rule1 = function rule1(index) {
   var i = 0;
   while(true) {
     if(i < num_boids) {
-      var G__7690 = x + kurosuke.main.x_boid.call(null, i);
-      var G__7691 = y + kurosuke.main.y_boid.call(null, i);
-      var G__7692 = i + 1;
-      x = G__7690;
-      y = G__7691;
-      i = G__7692;
+      var G__7921 = x + kurosuke.main.x_boid.call(null, i);
+      var G__7922 = y + kurosuke.main.y_boid.call(null, i);
+      var G__7923 = i + 1;
+      x = G__7921;
+      y = G__7922;
+      i = G__7923;
       continue
     }else {
       var cx = (x - kurosuke.main.x_boid.call(null, index)) / (num_boids - 1);
@@ -29937,8 +29937,8 @@ kurosuke.main.rule2 = function rule2(index) {
   while(true) {
     if(i < num_boids) {
       if(i === index) {
-        var G__7693 = i + 1;
-        i = G__7693;
+        var G__7924 = i + 1;
+        i = G__7924;
         continue
       }else {
         var b = kurosuke.main.boids[index];
@@ -29948,8 +29948,8 @@ kurosuke.main.rule2 = function rule2(index) {
           kurosuke.main.__EQ_.call(null, b, "vy", kurosuke.main.y_boid.call(null, i) - b["y"])
         }else {
         }
-        var G__7694 = i + 1;
-        i = G__7694;
+        var G__7925 = i + 1;
+        i = G__7925;
         continue
       }
     }else {
@@ -29965,12 +29965,12 @@ kurosuke.main.rule3 = function rule3(index) {
   var i = 0;
   while(true) {
     if(i < num_boids) {
-      var G__7695 = vx + kurosuke.main.vx_boid.call(null, i);
-      var G__7696 = vy + kurosuke.main.vy_boid.call(null, i);
-      var G__7697 = i + 1;
-      vx = G__7695;
-      vy = G__7696;
-      i = G__7697;
+      var G__7926 = vx + kurosuke.main.vx_boid.call(null, i);
+      var G__7927 = vy + kurosuke.main.vy_boid.call(null, i);
+      var G__7928 = i + 1;
+      vx = G__7926;
+      vy = G__7927;
+      i = G__7928;
       continue
     }else {
       var cvx = (vx - kurosuke.main.vx_boid.call(null, index)) / (num_boids - 1);
@@ -29986,9 +29986,9 @@ kurosuke.main.restrict = function restrict(index) {
   var b = kurosuke.main.boids[index];
   var speed = Math.sqrt.call(null, b["vx"] * b["vx"] + b["vy"] * b["vy"]);
   if(speed >= kurosuke.main.MAX_SPEED) {
-    var r_7698 = kurosuke.main.MAX_SPEED / speed;
-    kurosuke.main._STAR__EQ_.call(null, b, "vx", r_7698);
-    kurosuke.main._STAR__EQ_.call(null, b, "vy", r_7698)
+    var r_7929 = kurosuke.main.MAX_SPEED / speed;
+    kurosuke.main._STAR__EQ_.call(null, b, "vx", r_7929);
+    kurosuke.main._STAR__EQ_.call(null, b, "vy", r_7929)
   }else {
   }
   if(b["x"] < 0 && b["vx"] < 0 || b["x"] > cljs.core.deref.call(null, kurosuke.main.screen_width) && b["vx"] > 0) {
@@ -30007,8 +30007,8 @@ kurosuke.main.draw = function draw() {
   while(true) {
     if(i < kurosuke.main.boids.length) {
       kurosuke.main.ctx.drawImage(kurosuke.main.img, kurosuke.main.x_boid.call(null, i) - kurosuke.main.BOID_SIZE / 2, kurosuke.main.y_boid.call(null, i) - kurosuke.main.BOID_SIZE / 2, kurosuke.main.BOID_SIZE, kurosuke.main.BOID_SIZE);
-      var G__7699 = i + 1;
-      i = G__7699;
+      var G__7930 = i + 1;
+      i = G__7930;
       continue
     }else {
       return null
@@ -30024,11 +30024,11 @@ kurosuke.main.move = function move() {
       kurosuke.main.rule2.call(null, i);
       kurosuke.main.rule3.call(null, i);
       kurosuke.main.restrict.call(null, i);
-      var b_7700 = kurosuke.main.boids[i];
-      kurosuke.main._PLUS__EQ_.call(null, b_7700, "x", b_7700["vx"]);
-      kurosuke.main._PLUS__EQ_.call(null, b_7700, "y", b_7700["vy"]);
-      var G__7701 = i + 1;
-      i = G__7701;
+      var b_7931 = kurosuke.main.boids[i];
+      kurosuke.main._PLUS__EQ_.call(null, b_7931, "x", b_7931["vx"]);
+      kurosuke.main._PLUS__EQ_.call(null, b_7931, "y", b_7931["vy"]);
+      var G__7932 = i + 1;
+      i = G__7932;
       continue
     }else {
       return null
@@ -30057,6 +30057,13 @@ kurosuke.main.add_handler = function add_handler(evt) {
   var y = (new cljs.core.Keyword(null, "clientY", "clientY", 1874491744)).cljs$core$IFn$_invoke$arity$1(evt);
   return kurosuke.main.add_boid.call(null, x, y)
 };
+kurosuke.main.register_listener = function register_listener() {
+  if(navigator.userAgent.indexOf("iPhone") > 0) {
+    return domina.events.listen_BANG_.call(null, domina.by_id.call(null, "world"), new cljs.core.Keyword(null, "touchstart", "touchstart", 3730278389), kurosuke.main.add_handler)
+  }else {
+    return domina.events.listen_BANG_.call(null, domina.by_id.call(null, "world"), new cljs.core.Keyword(null, "click", "click", 1108654330), kurosuke.main.add_handler)
+  }
+};
 kurosuke.main.init = function init() {
   if(window === window.parent) {
     kurosuke.main.resize.call(null);
@@ -30070,7 +30077,7 @@ kurosuke.main.init = function init() {
     kurosuke.main.ctx.fillStyle = "rgba(33, 33, 33, 0.8)";
     kurosuke.main.make_boids.call(null);
     setInterval(kurosuke.main.simulate, 1E3 / kurosuke.main.FPS);
-    return domina.events.listen_BANG_.call(null, domina.by_id.call(null, "world"), new cljs.core.Keyword(null, "click", "click", 1108654330), kurosuke.main.add_handler)
+    return kurosuke.main.register_listener.call(null)
   }
 };
 window.onload = kurosuke.main.init;
